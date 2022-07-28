@@ -1,0 +1,40 @@
+{
+    "properties": {
+        "id": {
+            "index": "true",
+            "type": "long"
+        },
+        "machine_name": {
+            "index": "true",
+            "type": "text"
+        },
+        "status": {
+            "index": "true",
+            "type": "text"
+        },
+        "region": {
+            "index": "true",
+            "type": "text"
+        },
+        "federation": {
+            "index": "true",
+            "type": "text"
+        },
+        "tags": {
+            "index": "true",
+            "type": "text"
+        },
+	"ip_address": {
+            "index": "true",
+            "type": "text"
+        },
+	"team": {
+            "index": "true",
+            "type": "text"
+        },
+	"guest_os": {
+            "index": "true",
+            "type": "text"
+        }
+    }
+}

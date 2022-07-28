@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package es_search;
+
+option java_package = "unlenen.es.search.proto";
+option java_multiple_files = true;
+
+// Request Messages
+message SearchQuery {
+    string index = 1;
+    Conditions conditions = 2;
+    string class = 3;
+    int64 ttl = 4;
+}
+
+message Conditions {
+  ConditionType conditionType = 1;
+  repeated Statement statement = 2;
+  repeated Conditions conditions = 3;
+}
+
+enum ConditionType {
+  AND = 0;
+  OR = 1;
+}
+
+message Statement {
+  string key = 1;
+  Operator operator = 2;
+  string value = 3;
+}
+
+enum Operator {
+  EQUAL = 0;
+  NOT_EQUAL = 1;
+  INCLUDE = 2;
+  REGEX = 3;
+  GREATER_THAN = 4;
+  LITTLE_THAN = 5;
+  GREATER_EQUAL = 6;
+  LITTLE_EQUAL = 7;
+}
+
+// Response Messages
+
+enum ResultType {
+  SUCCESS_NORMAL = 0;
+  SUCCESS_CACHE = 1;
+  FAIL = 2;
+}
+
+message Error{
+  string message = 1;
+  string code = 2;
+}
+
+message QueryStatistic{
+  int64 ttl = 1;
+  int64 searchTime = 2;
+  int64 requestPrepareTime = 3 ;
+  int64 responsePrepareTime = 4 ;
+}
+
+message KeyValuePair {
+  string key = 1;
+  string value = 2;
+}
+
+message Result {
+  repeated KeyValuePair keyValuePair = 1;
+}
+
+message SearchResult {
+  ResultType resultType = 1;
+  repeated Result result = 2;
+  Error error= 3;
+  QueryStatistic statistics= 4;
+}
+
+service SearchService {
+  rpc search(SearchQuery) returns (SearchResult) {};
+}
